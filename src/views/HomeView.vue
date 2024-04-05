@@ -1,10 +1,9 @@
 <template>
   <div class="home">
     <div class="categories">
-      <!-- <RestaurantCarousel />
-      <RestaurantCarousel />
-      <RestaurantCarousel />
-      <RestaurantCarousel /> -->
+      <RestaurantCarousel category="Exclusive to Eat" />
+      <RestaurantCarousel category="Family Meals" />
+      <RestaurantCarousel category="Breakfast and Brunch" />
     </div>
 
     <div class="restaurants" v-if="restaurants.length">
@@ -16,14 +15,24 @@
   </div>
 </template>
 
+<style scoped>
+.restaurants{
+  display: flex;
+  flex-direction: column;
+}
+.restaurants .restaurant-item{
+  margin-top: 10px;
+}
+</style>
+
 <script>
-// import RestaurantCarousel from "@/components/RestaurantCarousel.vue";
+import RestaurantCarousel from "@/components/RestaurantCarousel.vue";
 import RestaurantComponent from "@/components/RestaurantComponent.vue";
 
 export default {
   name: "HomeView",
   components: {
-    // RestaurantCarousel,
+    RestaurantCarousel,
     RestaurantComponent,
   },
   data() {
@@ -39,7 +48,6 @@ export default {
       fetch(`${process.env.VUE_APP_API_URL}/restaurants`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.restaurants)
           this.restaurants = data.restaurants;
         })
         .catch((error) => console.error(error));

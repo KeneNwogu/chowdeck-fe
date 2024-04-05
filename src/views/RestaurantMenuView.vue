@@ -47,7 +47,6 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.menu);
           this.menu = data.menus;
           this.restaurant = data.restaurant;
         })
