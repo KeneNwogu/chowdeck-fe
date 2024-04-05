@@ -1,5 +1,5 @@
 <template>
-  <div class="restaurant-item">
+  <router-link class="restaurant-item" :to="{ name: 'restaurant', params: { id: restaurant.id } }">
     <img :src="restaurant.image" alt="restaurant" />
     <div class="flex">
       <p class="restaurant-name">{{ restaurant.name }}</p>
@@ -15,7 +15,7 @@
       </p>
       <p><i class="uil uil-star"></i>{{ restaurant.averageRating }} ({{ restaurant.ratings }})</p>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -38,6 +38,8 @@ export default {
     min-width: 300px;
     margin-bottom: 20px;
     font-size: 0.85em;
+    text-decoration: none;
+    color: initial;
 }
 
 .restaurant-name{
