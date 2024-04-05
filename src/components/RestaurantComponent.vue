@@ -33,7 +33,6 @@ export default {
 .restaurant-item{
     flex: 0 0 auto;
     scroll-snap-align: start;
-    margin-right: 20px;
     border-radius: 10px;
     min-width: 300px;
     margin-bottom: 20px;
