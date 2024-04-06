@@ -18,12 +18,7 @@
 
   <div class="tab-content">
     <div v-if="currentTab == 'cart'">
-      <CartOrderComponent />
-      <CartOrderComponent />
-      <CartOrderComponent />
-      <CartOrderComponent />
-      <CartOrderComponent />
-      <CartOrderComponent />
+      <CartOrderComponent v-for="item in groupedCart" :key="item.restaurant.id" :item="item" />
     </div>
 
     <div v-if="currentTab == 'completed'">
@@ -41,6 +36,8 @@
 import CartOrderComponent from "@/components/CartOrderComponent.vue";
 import CompletedOrderComponent from "@/components/CompletedOrderComponent.vue";
 import TabNavigation from "@/components/TabNavigation.vue";
+import { mapGetters } from "pinia";
+import { useCartStore } from "@/store";
 
 export default {
   components: {
@@ -58,6 +55,9 @@ export default {
       currentTab: "cart",
     };
   },
+  computed: {
+    ...mapGetters(useCartStore, ['groupedCart'])
+  }
 };
 </script>
 

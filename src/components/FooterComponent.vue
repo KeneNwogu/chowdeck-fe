@@ -12,9 +12,11 @@
                 <p>Search</p>
             </router-link>
 
-            <router-link to="/orders" class="nav-item">
+            <router-link to="/orders" class="nav-item" style="position: relative;">
                 <div><i class="uil uil-shopping-bag"></i></div>
                 <p>Orders</p>
+
+                <p class="cart-length" v-if="restaurants.length">{{ restaurants.length }}</p>
             </router-link>
 
             <router-link to="/support" class="nav-item">
@@ -29,6 +31,17 @@
         </nav>
    </footer>
 </template>
+
+<script>
+import { mapState } from 'pinia'
+import { useCartStore } from '@/store';
+
+export default {
+    computed: {
+        ...mapState(useCartStore, ['restaurants'])
+    }
+};
+</script>
 
 <style scoped>
 a{
@@ -60,5 +73,20 @@ i{
 }
 .nav-item > div{
     margin-bottom: -10px;
+}
+
+.cart-length{
+    position: absolute;
+    right: -5px;
+    top: -12px;
+    background-color: rgb(15, 56, 15);
+    padding: 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

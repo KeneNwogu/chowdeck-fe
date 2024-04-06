@@ -4,16 +4,16 @@
       <div class="restaurant-details">
         <div class="restaurant-header">
           <div class="restaurant-image">
-            <img src="https://via.placeholder.com/150" alt="restaurant" />
+            <img :src="item.restaurant.image" alt="restaurant" />
           </div>
           <div class="order-details">
-            <p>Jendol Bread</p>
+            <p class="ellipsis">{{ item.restaurant.name }}</p>
             <p class="flex">
-              <span>1 item</span>
+              <span>{{ item.cart.length }} {{ item.cart.length == 1 ? 'item' : 'items' }}</span>
               <span style="margin: 0 2px; font-weight: 500;">
                 <i class="uil uil-circle" style="font-size: 0.5em;"></i>
               </span>
-              <span>₦300</span>
+              <span>₦{{ price }}</span>
             </p>
           </div>
         </div>
@@ -32,7 +32,7 @@
               style="margin-right: 3px; font-size: 1.2em"
             ></i>
           </p>
-          <p>123, Fake Street, Fake City</p>
+          <p class="ellipsis">{{ item.restaurant.address }}</p>
         </div>
       </div>
 
@@ -47,7 +47,30 @@
   </div>
 </template>
 
+<script>
+export default {
+  data(){
+    return {
+      price: 0
+    }
+  },
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
+  beforeMount(){
+    this.price = this.item.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0)
+  }
+}
+</script>
+
 <style scoped>
+.ellipsis{
+  width: 95% !important;
+}
+
 .flex{
     display: flex;
     justify-content: space-between;

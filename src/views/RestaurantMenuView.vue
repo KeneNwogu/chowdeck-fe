@@ -17,24 +17,30 @@
       </div>
       <div class="menu">
         <div v-for="item in menu" :key="item.id">
-          <MenuItem :item="item" />
+          <MenuItem :item="item" @openAddCartModal="(value) => openCartModal(value)" />
         </div>
       </div>
     </div>
+    
+    <AddToCartModal v-if="showCartModal" :modalItem="modalItem" @closeCartModal="showCartModal = false" />
   </div>
 </template>
 
 <script>
 import MenuItem from "@/components/MenuItem.vue";
+import AddToCartModal from "@/components/AddToCartModal.vue";
 
 export default {
   components: {
     MenuItem,
+    AddToCartModal
   },
   data() {
     return {
       menu: [],
       restaurant: {},
+      modalItem: null,
+      showCartModal: false
     };
   },
   beforeMount() {
@@ -47,11 +53,17 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          this.menu = data.menus;
+          this.menu = data.menus.map(menu => ({ ...menu, restaurant: data.restaurant }));
           this.restaurant = data.restaurant;
         })
         .catch((error) => console.error(error));
     },
+    openCartModal(menuId){
+      let menuItem = this.menu.find(item => item.id == menuId)
+      if(!menuItem) return;
+      this.modalItem = menuItem;
+      this.showCartModal = true;
+    }
   },
 };
 </script>
@@ -59,6 +71,7 @@ export default {
 <style scoped>
 .container {
   font-size: 0.85em;
+  position: relative;
 }
 
 .icons div:not(:last-child) {

@@ -10,7 +10,7 @@
         <div style="margin: 0; padding: 0">
             <img :src="item.image" alt="menu item" />
         </div>
-        <button>Add +</button>
+        <button @click="$emit('openAddCartModal', item.id)">Add +</button>
       </div>
     </div>
   </div>

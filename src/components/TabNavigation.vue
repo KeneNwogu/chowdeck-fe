@@ -51,6 +51,7 @@ export default {
   display: block;
   text-decoration: none;
   padding: 15px;
+  width: 100%;
   color: rgb(138, 138, 138);
   font-size: 0.9em;
   text-align: center;
