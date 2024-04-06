@@ -17,11 +17,11 @@
             </p>
           </div>
         </div>
-        <div class="selection">
+        <!-- <div class="selection">
           <p>
             View Selection <span><i class="uil uil-angle-up"></i></span>
           </p>
-        </div>
+        </div> -->
       </div>
 
       <div class="delivery-info">
@@ -37,12 +37,12 @@
       </div>
 
       <div class="checkout">
-        <button style="font-family: Plus Jakarta Sans">Checkout</button>
+        <router-link :to="{ name: 'checkout', params: { id: item.restaurant.id } }"><button>Checkout</button></router-link>
       </div>
       
-      <div class="clear-selection">
+      <!-- <div class="clear-selection">
         <p>Clear Selection</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import SearchView from '../views/SearchView.vue'
 import OrderView from '../views/OrderView.vue'
 import RestaurantMenuView from '../views/RestaurantMenuView.vue'
+import CartCheckoutView from '@/views/CartCheckoutView.vue'
 
 
 const routes = [
@@ -33,6 +34,11 @@ const routes = [
     path: '/restaurants/:id',
     name: 'restaurant',
     component: RestaurantMenuView
+  },
+  {
+    path: '/restaurants/:id/checkout',
+    name: 'checkout',
+    component: CartCheckoutView
   }
 ]
 
