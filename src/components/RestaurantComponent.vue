@@ -50,7 +50,7 @@ export default {
 }
 
 .restaurant-item img{
-    width: 100%;
+    min-width: 300px;
     max-height: 150px;
     border-radius: 10px;
     object-fit: cover;

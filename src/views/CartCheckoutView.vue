@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="checkout-header">
         <h3><span><i class="uil uil-arrow-left" style="font-size: 1.1em;"></i></span> Checkout</h3>
       <!-- <div class="checkout-nav">

@@ -14,7 +14,9 @@
 
         <div class="cart-modal flex">
             <CartButton :value="quantity" @updateValue="(value) => quantity = value" />
-            <button class="add-btn" @click="addToCart({ ...modalItem, quantity })">Add ₦{{ modalItem.price * quantity }}</button>
+            <button class="add-btn" @click="addToCart({ ...modalItem, quantity }); $emit('closeCartModal')">
+                Add ₦{{ modalItem.price * quantity }}
+            </button>
         </div>
     </div>
 </template>
@@ -93,7 +95,7 @@ export default {
 
 .cart-modal{
     position: relative;
-    margin-top: 30%;
+    margin-top: 30vh;
 }
 
 .add-btn{
