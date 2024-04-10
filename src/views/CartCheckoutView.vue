@@ -107,11 +107,12 @@ export default {
 
 .order-summary .heading{
     padding: 5px;
-    background: rgb(212, 212, 212);
+    /* background: rgb(212, 212, 212); */
     width: 100vw;
     margin: 0 auto;
-    position: absolute;
-    left: 0;
+    /* position: absolute; */
+    /* left: 0; */
+    font-size: 1.2em;
     color: black;
 }
 
@@ -126,10 +127,12 @@ export default {
 }
 
 footer{
-    position: absolute;
-    bottom: 90px;
+    /* position: absolute;
+    bottom: 90px; */
     text-align: center;
     font-size: 0.85em;
+    width: 100%;
+    margin-top: 50vh;
 }
 
 footer p > span{
