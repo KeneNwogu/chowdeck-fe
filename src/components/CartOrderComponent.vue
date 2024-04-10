@@ -8,7 +8,7 @@
           </div>
           <div class="order-details">
             <p class="ellipsis">{{ item.restaurant.name }}</p>
-            <p class="flex">
+            <p style="display: flex; align-items: center;">
               <span>{{ item.cart.length }} {{ item.cart.length == 1 ? 'item' : 'items' }}</span>
               <span style="margin: 0 2px; font-weight: 500;">
                 <i class="uil uil-circle" style="font-size: 0.5em;"></i>
@@ -68,14 +68,15 @@ export default {
 
 <style scoped>
 .ellipsis{
-  width: 95% !important;
+  width: 75% !important;
 }
 
 .flex{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .container{
     width: 100%;
     margin: 0 auto;

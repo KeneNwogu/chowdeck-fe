@@ -1,6 +1,7 @@
 <template>
-  <router-view/>
-
+  <div class="overflow">
+    <router-view/>
+  </div>
   <footer-component></footer-component>
 </template>
 
@@ -23,6 +24,12 @@ body {
 
 button{
   font-family: Plus Jakarta Sans;
+}
+
+.overflow{
+  height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 100px;
 }
 
 .ellipsis{
