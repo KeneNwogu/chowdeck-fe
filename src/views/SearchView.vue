@@ -5,6 +5,7 @@
             <input type="text" 
                 placeholder="Search for restaurants or dishes"
                 @input="search($event)"
+                ref="searchInput"
             >
         </div>
 
@@ -40,6 +41,8 @@ let results = ref([])
 let searchTerm = ref('')
 let loading = ref(false)
 
+const searchInput = ref(null)
+
 const searchApi = async (query) => {
     loading.value = true
 
@@ -64,6 +67,7 @@ const clearSearch = () => {
     results.value = []
     searchTerm.value = ''
     loading.value = false
+    searchInput.value.value = ''
 }
 </script>
 
