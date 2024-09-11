@@ -4,13 +4,18 @@ import SearchView from '../views/SearchView.vue'
 import OrderView from '../views/OrderView.vue'
 import RestaurantMenuView from '../views/RestaurantMenuView.vue'
 import CartCheckoutView from '@/views/CartCheckoutView.vue'
-
+import ProfileView from '@/views/ProfileView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfileView
   },
   {
     path: '/about',

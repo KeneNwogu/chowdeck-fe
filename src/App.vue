@@ -29,7 +29,8 @@ button{
 .overflow{
   height: 100vh;
   overflow-y: auto;
-  padding-bottom: 100px;
+  margin-bottom: 100px;
+  background: transparent;
 }
 
 .ellipsis{

@@ -6,7 +6,6 @@ export const useCartStore = defineStore('cart', {
   state: () => ({ cart: [], restaurants: [] }),
   actions: {
     addToCart(cartItem){
-      console.log(cartItem);
       let existingRestaurant = this.restaurants.find(r => r.id == cartItem.restaurant.id)
       if(!existingRestaurant) this.restaurants.push(cartItem.restaurant)
 
@@ -28,8 +27,22 @@ export const useCartStore = defineStore('cart', {
         return acc;
       }, {})
 
-      console.log(Object.values(group))
       return Object.values(group);
+    }
+  }
+})
+
+export const useUserStore = defineStore('user', {
+  persist: true,
+  state: () => ({ user: null, token: null }),
+  actions: {
+    login(user, token){
+      this.user = user;
+      this.token = token;
+    },
+    logout(){
+      this.user = null;
+      this.token = null;
     }
   }
 })
