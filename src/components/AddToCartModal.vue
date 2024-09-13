@@ -12,7 +12,7 @@
             <p>₦{{ modalItem.price }}</p>
         </div>
 
-        <div class="cart-modal flex">
+        <div class="cart-modal flex-space">
             <CartButton :value="quantity" @updateValue="(value) => quantity = value" />
             <button class="add-btn" @click="addToCart({ ...modalItem, quantity }); $emit('closeCartModal')">
                 Add ₦{{ modalItem.price * quantity }}

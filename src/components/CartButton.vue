@@ -1,5 +1,5 @@
 <template>
-    <div class="cart-btn-container flex">
+    <div class="cart-btn-container flex-space">
         <button @click="$emit('updateValue', value + 1)"><i class="uil uil-plus"></i></button>
         <p>{{ value }}</p>
         <button @click="$emit('updateValue', value > 1 ? value - 1 : 1)"><i class="uil uil-minus"></i></button>

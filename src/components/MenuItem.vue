@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex-space">
     <div class="menu-details">
       <p>{{ item.name }}</p>
       <p>₦{{ item.price }}</p>
@@ -29,7 +29,7 @@ export default{
 </script>
 
 <style scoped>
-.flex{
+.flex-space{
     margin-bottom: 60px;
 }
 .menu-details{

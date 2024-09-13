@@ -1,11 +1,14 @@
 <template>
-  <div class="overflow">
-    <router-view/>
+  <div class="container">
+      <main class="overflow">
+        <router-view/>
+      </main>
+    <footer-component></footer-component>
   </div>
-  <footer-component></footer-component>
 </template>
 
 <script>
+import './assets/css/global.css';
 import FooterComponent from '@/components/FooterComponent.vue'
 export default {
   components: {
@@ -15,35 +18,5 @@ export default {
 </script>
 
 <style>
-body {
-  font-family: Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
 
-button{
-  font-family: Plus Jakarta Sans;
-}
-
-.overflow{
-  height: 100vh;
-  overflow-y: auto;
-  margin-bottom: 100px;
-  background: transparent;
-}
-
-.ellipsis{
-  text-overflow: ellipsis;
-  overflow: hidden; 
-  width: 200px; 
-  height: 1.6em; 
-  white-space: nowrap;
-}
-
-.flex{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 </style>

@@ -72,7 +72,7 @@ export default {
   width: 75% !important;
 }
 
-.flex{
+.flex-space{
   display: flex;
   justify-content: space-between;
   align-items: center;

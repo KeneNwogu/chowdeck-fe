@@ -21,7 +21,7 @@
   flex-direction: column;
 }
 .restaurants .restaurant-item{
-  margin-top: 10px;
+  margin-block: 10px 65px;
 }
 </style>
 

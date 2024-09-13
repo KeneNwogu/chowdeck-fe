@@ -2,13 +2,13 @@
   <div class="container">
     <div v-if="restaurant">
       <div class="restaurant-details">
-        <div class="flex">
+        <div class="flex-space">
           
           <p class="ellipsis">
             <span><i class="uil uil-arrow-left" style="font-size: 1.3em;"></i></span>
             {{ restaurant.name }}
           </p>
-          <div class="icons flex" style="width: 15%; margin-right: 15px">
+          <div class="icons flex-space" style="width: 15%; margin-right: 15px">
             <div><i class="uil uil-share-alt"></i></div>
             <div><i class="uil uil-heart" style="font-size: 1.2em"></i></div>
             <div><i class="uil uil-search"></i></div>
