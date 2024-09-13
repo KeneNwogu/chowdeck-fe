@@ -16,11 +16,11 @@
                 <div><i class="uil uil-shopping-bag"></i></div>
                 <p>Orders</p>
 
-                <p class="cart-length" v-if="restaurants.length">{{ restaurants.length }}</p>
+                <p class="cart-length flex-center" v-if="restaurants.length">{{ restaurants.length }}</p>
             </router-link>
 
             <router-link to="/support" class="nav-item">
-                <div><i class="uil uil-comment-alt-question"></i></div>
+                <div><i class="uil uil-comment-dots"></i></div>
                 <p>Support</p>
             </router-link>
 
@@ -46,18 +46,28 @@ export default {
 <style scoped>
 a{
     text-decoration: none;
-    color: initial;
+    color: var(--light-grey);
+}
+
+.router-link-active{
+    color: var(--dark-green)
+}
+.router-link-active p {
+    font-weight: 800;
 }
 
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
+    right: 0;
     width: 100%;
     background-color: #fff;
     z-index: 1000;
     font-size: 10px;
     text-align: center;
+    max-width: 500px;
+    margin-inline: auto;
 }
 
 footer nav {
@@ -65,7 +75,7 @@ footer nav {
     justify-content: space-around;
     align-items: center;
     padding: 10px 0;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e066;
 }
 
 i{
@@ -85,8 +95,5 @@ i{
     height: 10px;
     border-radius: 50%;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 </style>

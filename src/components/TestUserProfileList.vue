@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="profile">
     <div class="container">
       <h1>Sign in with a Test Account</h1>
       <p>Choose an existing account or create a new one.</p>
@@ -59,25 +59,25 @@ export default {
 
 
 <style scoped>
-.body {
+.profile {
   /* font-family: Arial, sans-serif; */
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   overflow: hidden;
-  background-color: #f1f1f1;
 }
 
 .container {
   padding: 40px;
   text-align: center;
   width: 400px; /* Adjust width for larger screens */
+  margin-inline:auto;
 }
 
 h1 {

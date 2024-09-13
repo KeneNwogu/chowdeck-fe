@@ -102,6 +102,7 @@ const clearSearch = () => {
 }
 .search-results{
     margin-top: 20px;
+    padding-bottom: 60px;
 }
 
 .search-term{
