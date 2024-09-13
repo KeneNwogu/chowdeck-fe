@@ -16,6 +16,10 @@
 body {
     color: var(--text)
   }
+
+  button{
+    cursor: pointer;
+  }
   
   .container {
     max-width: 500px;
