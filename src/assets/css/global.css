@@ -27,8 +27,8 @@ body {
   }
   
   .overflow{
-    min-height: 100dvh;
-    margin-bottom: 40px;
+    min-height: 100vh;
+    margin-bottom: 100px;
     background: transparent;
     padding-inline:24px;
   }
