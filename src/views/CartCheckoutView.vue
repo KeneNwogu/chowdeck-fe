@@ -1,154 +1,213 @@
 <template>
-  <div>
-    <div class="checkout-header">
-        <h3><span><i class="uil uil-arrow-left" style="font-size: 1.1em;"></i></span> Checkout</h3>
-      <!-- <div class="checkout-nav">
-        <div class="nav-item">
-          <p>Your Order</p>
-          <div class="nav-bar"></div>
-        </div>
-        <div class="nav-item">
-          <p>Delivery & Payment</p>
-          <div class="nav-bar"></div>
-        </div>
-      </div> -->
+  <div class="container">
+    <div class="header-container">
+      <p class="header-text">Checkout Summary</p>
     </div>
 
-    <div class="order-summary">
-      <div class="heading"><p>Order Summary</p></div>
+    <section class="restaurant-info" style="margin-bottom: 40px; margin-top: 40px;">
       <div>
-        <div class="restaurant">
-          <div class="restaurant-header">
-            <div class="restaurant-image">
-              <img :src="restaurant.image" alt="restaurant" />
-            </div>
-            <div class="order-details">
-              <p class="ellipsis">{{ restaurant.name }}</p>
-              <p>
-                <span
-                  >{{ items.length }}
-                  {{ items.length == 1 ? "item" : "items" }}</span
-                >
-                <span style="margin: 0 2px; font-weight: 500">
-                  <i class="uil uil-circle" style="font-size: 0.5em"></i>
-                </span>
-                <span>₦{{ price }}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="items">
-            <div class="flex" v-for="item in items" :key="item.id">
-                <div style="margin-top: 12px;">
-                    <span><i class="uil uil-rocket"></i></span> 
-                    <span>{{ item.name }}</span>
-                    <p class="item-price">₦{{ item.price }}</p>
-                </div>
-                <p>Quantity: {{ item.quantity }}</p>
-            </div>
+        <div>
+          <p class="text">{{ restaurant.name }}</p>
+          <p style="font-size: 14px; font-weight: 400; color: #000000ff">
+            {{ restaurant.address }}
+          </p>
         </div>
       </div>
+    </section>
+
+    <div class="order-summary">
+      <p class="text">Your Order</p>
+
+      <section>
+        <div class="order-container" v-for="item in items" :key="item.id">
+          <div>
+            <p class="name">{{ item.name }}</p>
+            <p class="quantity">Quantity: {{ item.quantity }}</p>
+            <p class="quantity">
+              Price: {{formatPrice(item.price)}} each, Total: {{formatPrice(item.price * item.quantity)}}
+            </p>
+          </div>
+
+          <div>
+            <img :src="item.image" alt="product" />
+          </div>
+        </div>
+      </section>
     </div>
 
-    <footer>
-        <p>By proceeding, you agree to our <span>Terms of Use</span> and <span>Privacy Policy</span></p>
-        <button class="checkout-btn">
-            <p>Make Payment</p>
-            <p>₦{{ price }}</p>
-        </button>
-    </footer>
+    <div class="checkout-details">
+      <p class="text">Total Price</p>
+      <p class="sub-text">Sub-total: {{ formatPrice(price) }}</p>
+      <p class="sub-text">Delivery Fee: {{ formatPrice(500) }}</p>
+      <p class="sub-text">Tax: {{ formatPrice(0) }}</p>
+      <p class="sub-text">Total: {{ formatPrice(price + 500) }}</p>
+      <button class="checkout-btn">
+        <span><i class="uil uil-check-circle" style="font-size: 1.2em;"></i></span>
+        <span>Complete Order</span>
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "pinia"
-import { useCartStore } from "@/store"
+import { mapState } from "pinia";
+import { useCartStore } from "@/store";
+// import { formatPrice as priceFormatter } from "lodash"
+
+import { usePriceFormatter } from "@/composables/usePriceFormatter";
 
 export default {
-    beforeMount(){
-        this.items = this.cart.filter(i => i.restaurant.id == this.$route.params.id)
-        if(this.items.length) this.restaurant = this.items[0].restaurant;
-        this.price = this.items.reduce((acc, i) => acc + i.price * i.quantity, 0)
+  beforeMount() {
+    this.items = this.cart.filter(
+      (i) => i.restaurant.id == this.$route.params.id
+    );
+    if (this.items.length) this.restaurant = this.items[0].restaurant;
+    this.price = this.items.reduce((acc, i) => acc + i.price * i.quantity, 0);
+  },
+  data() {
+    return {
+      items: [],
+      restaurant: {},
+      price: 0,
+      unitPrice: 0,
+    };
+  },
+  computed: {
+    ...mapState(useCartStore, ["cart"]),
+  },
+  methods: {
+    formatPrice(price) {
+      let priceFormatter = usePriceFormatter();
+      return priceFormatter(price);
     },
-    data(){
-        return {
-            items: [],
-            restaurant: {},
-            price: 0
-        }
-    },
-    computed: {
-        ...mapState(useCartStore, ['cart'])
-    }
-}
+  },
+};
 </script>
 
 <style scoped>
-.restaurant-image img{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+.container {
+  margin: 10px;
 }
 
-.restaurant-header{
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
+.text {
+  /* font-family: Lexend;  */
+  /* Heading */
+  font-size: 17px;
+  line-height: 30px;
+  font-weight: 700;
+  color: #000000ff; /* black */
 }
 
-.restaurant-header p{
-    margin: 0;
+.sub-text {
+  font-size: 12px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #000000ff;
+  margin: 2px 0;
 }
 
-.order-details{
-    margin-left: 10px;
+.header-container {
+  /* position: relative; 
+  top: 52px;  */
+  margin: 20px auto;
+  height: 36px;
+  background: #ffffff00; /* white */
+  border-radius: 0px;
 }
 
-.order-summary .heading{
-    padding: 5px;
-    /* background: rgb(212, 212, 212); */
-    width: 100vw;
-    margin: 0 auto;
-    /* position: absolute; */
-    /* left: 0; */
-    font-size: 1.2em;
-    color: black;
+.header-icon {
+  width: 24px;
+  height: 24px;
+  fill: #000000ff; /* black */
 }
 
-.items{
-    margin-top: 20px;
+.header-text {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 700;
+  color: #000000ff; /* black */
+  text-align: center;
 }
 
-.item-price{
-    margin-left: 12px;
-    font-weight: 200;
-    color: rgb(139, 139, 136);
+.order-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 1px #171a1f, 0px 0px 2px #171a1f;
+  /* padding-bottom: 10px; */
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 95%;
 }
 
-footer{
-    /* position: absolute;
+.order-container img {
+  width: 112px;
+  height: 149px;
+  object-fit: cover;
+}
+
+.order-container .name {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.order-container .quantity {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #9095a1ff;
+  margin: 3px;
+}
+
+.checkout-details {
+  margin-top: 40px;
+}
+
+.checkout-btn {
+  margin-top: 20px;
+  width: 100%;
+  height: 48px;
+  /* padding: 0 px;  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: #ffffffff; /* white */
+  background: rgb(15, 56, 15); /* primary-500 */
+  opacity: 1;
+  border: none;
+  border-radius: 6px; /* border-l */
+  gap: 8px;
+}
+
+footer {
+  /* position: absolute;
     bottom: 90px; */
-    text-align: center;
-    font-size: 0.85em;
-    width: 100%;
-    margin-top: 50vh;
+  text-align: center;
+  font-size: 0.85em;
+  width: 100%;
+  margin-top: 50vh;
 }
 
-footer p > span{
-    color: rgb(118, 209, 118);
-    text-decoration: underline;
+footer p > span {
+  color: rgb(118, 209, 118);
+  text-decoration: underline;
 }
 
-footer .checkout-btn{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 1.05em;
-    border: none;
-    outline: none;
-    background: rgb(9, 70, 9);
-    color: white;
-    border-radius: 5px;
+footer .checkout-btn {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.05em;
+  border: none;
+  outline: none;
+  background: rgb(9, 70, 9);
+  color: white;
+  border-radius: 5px;
 }
 </style>

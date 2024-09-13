@@ -5,6 +5,7 @@ import OrderView from '../views/OrderView.vue'
 import RestaurantMenuView from '../views/RestaurantMenuView.vue'
 import CartCheckoutView from '@/views/CartCheckoutView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import { useUserStore } from '@/store'
 
 const routes = [
   {
@@ -43,7 +44,16 @@ const routes = [
   {
     path: '/restaurants/:id/checkout',
     name: 'checkout',
-    component: CartCheckoutView
+    component: CartCheckoutView,
+    beforeEnter: () => {
+      // reject the navigation
+      let userStore = useUserStore()
+      if(userStore.token){
+        return true
+      }
+      
+      return { name: 'profile' }
+    },
   }
 ]
 

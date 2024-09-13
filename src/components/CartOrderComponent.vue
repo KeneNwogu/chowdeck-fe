@@ -9,11 +9,9 @@
           <div class="order-details">
             <p class="ellipsis">{{ item.restaurant.name }}</p>
             <p style="display: flex; align-items: center;">
-              <span>{{ item.cart.length }} {{ item.cart.length == 1 ? 'item' : 'items' }}</span>
-              <span style="margin: 0 2px; font-weight: 500;">
-                <i class="uil uil-circle" style="font-size: 0.5em;"></i>
+              <span>
+                {{ item.cart.length }} {{ item.cart.length == 1 ? 'item' : 'items' }}: <span>{{ price }}</span>
               </span>
-              <span>₦{{ price }}</span>
             </p>
           </div>
         </div>
@@ -48,6 +46,8 @@
 </template>
 
 <script>
+import { usePriceFormatter } from '@/composables/usePriceFormatter';
+
 export default {
   data(){
     return {
@@ -61,7 +61,8 @@ export default {
     }
   },
   beforeMount(){
-    this.price = this.item.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0)
+    let priceFormatter = usePriceFormatter()
+    this.price = priceFormatter(this.item.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0))
   }
 }
 </script>
