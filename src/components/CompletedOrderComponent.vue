@@ -1,17 +1,25 @@
 <template>
     <div class="container">
         <div class="flex">
-            <p>Restaurant Name</p>
-            <p>Order b2e43e1b</p>
+            <p>{{ order.restaurant.name }}</p>
+            <p>Order {{ order.id.slice(0, 8) }}</p>
         </div>
         <div class="flex" style="margin-top: -1.2rem;">
-            <p>21st March, 2024. 6:10</p>
+            <p>-</p>
             <p style="color: green;">View timeline</p>
         </div>
     </div>
 </template>
 
+<script>
+export default {
+    name: "CompletedOrderComponent",
+    props: {
+        order: Object
+    },
 
+};
+</script>
 
 
 <style scoped>
