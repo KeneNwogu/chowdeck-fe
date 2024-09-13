@@ -7,7 +7,7 @@
       <p><button class="clear-cart">Clear Cart</button></p>
     </div>
 
-    <div class="nav" style="margin-top: -12px;">
+    <div class="nav" style="margin-top: -12px">
       <TabNavigation
         :tabs="tabs"
         :currentTab="currentTab"
@@ -18,16 +18,32 @@
 
   <div class="tab-content">
     <div v-if="currentTab == 'cart'">
-      <CartOrderComponent v-for="item in groupedCart" :key="item.restaurant.id" :item="item" />
+      <CartOrderComponent
+        v-for="item in groupedCart"
+        :key="item.restaurant.id"
+        :item="item"
+      />
+    </div>
+
+    <div v-if="currentTab == 'ongoing'">
+      <div class="ongoing-orders" v-if="user"></div>
+      <div v-else>
+        <p>Sign in to view ongoing orders</p>
+      </div>
     </div>
 
     <div v-if="currentTab == 'completed'">
-      <CompletedOrderComponent />
-      <CompletedOrderComponent />
-      <CompletedOrderComponent />
-      <CompletedOrderComponent />
-      <CompletedOrderComponent />
-      <CompletedOrderComponent />
+      <div class="completed-orders" v-if="user">
+        <CompletedOrderComponent />
+        <CompletedOrderComponent />
+        <CompletedOrderComponent />
+        <CompletedOrderComponent />
+        <CompletedOrderComponent />
+        <CompletedOrderComponent />
+      </div>
+      <div v-else>
+        <p>Sign in to view completed orders</p>
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +53,8 @@ import CartOrderComponent from "@/components/CartOrderComponent.vue";
 import CompletedOrderComponent from "@/components/CompletedOrderComponent.vue";
 import TabNavigation from "@/components/TabNavigation.vue";
 import { mapGetters } from "pinia";
-import { useCartStore } from "@/store";
+import { useCartStore, useUserStore } from "@/store";
+import axios from "axios";
 
 export default {
   components: {
@@ -53,20 +70,62 @@ export default {
         { name: "Completed", action: "completed" },
       ],
       currentTab: "cart",
+      completedOrders: [],
+      ongoingOrders: [],
+      fetchedOngoing: false,
+      fetchedCompleted: false,
     };
   },
   computed: {
-    ...mapGetters(useCartStore, ['groupedCart'])
-  }
+    ...mapGetters(useCartStore, ["groupedCart"]),
+    ...mapGetters(useUserStore, ["user", "token"]),
+  },
+  methods: {
+    fetchOrders(filter) {
+      if (this.user) {
+        axios
+          .get(`${process.env.VUE_APP_API_URL}/orders?status=${filter}`, {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          })
+          .then((res) => {
+            if (filter == "completed") {
+              this.completedOrders = res.data;
+              this.fetchedCompleted = true;
+            } else {
+              this.ongoingOrders = res.data;
+              this.fetchedOngoing = true;
+            }
+          })
+          .catch(() => {
+            // redirect to login
+            let userStore = useUserStore();
+            userStore.logout();
+
+            this.$router.push({ name: "profile" });
+          });
+      }
+    },
+  },
+  watch: {
+    currentTab(value) {
+      console.log(value);
+      if (value == "ongoing" && !this.fetchedOngoing) {
+        this.fetchOrders("in_progress");
+      } else if (value == "completed" && !this.fetchedCompleted) {
+        this.fetchOrders("completed");
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .nav-container {
-    margin: 0 auto;
-    width: 100%;
-    border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 20px;
+  margin: 0 auto;
+  width: 100%;
+  /* margin-bottom: 20px; */
 }
 .order-nav {
   display: flex;
