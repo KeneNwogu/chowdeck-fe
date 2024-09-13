@@ -69,7 +69,9 @@ export default {
 </script>
 
 <style scoped>
-
+.ellipsis{
+  text-transform: capitalize
+}
 .icons div:not(:last-child) {
   margin-right: 10px;
 }
