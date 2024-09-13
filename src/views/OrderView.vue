@@ -107,6 +107,10 @@ export default {
           });
       }
     },
+    emptyCart() {
+      // function to clear cart
+      return 
+    }
   },
   watch: {
     currentTab(value) {
