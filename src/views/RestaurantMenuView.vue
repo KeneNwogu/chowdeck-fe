@@ -75,7 +75,11 @@ export default {
 }
 
 .restaurant-details{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-weight: 700;
+}
+
+.menu{
+  padding-bottom: 65px;
 }
 </style>
