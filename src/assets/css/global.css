@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans:200,300,regular,500,600,700,800,200italic,300italic,italic,500italic,600italic,700italic,800italic");
+
+:root {
+    /* Primary Colors */
+    --text: #2c3e50;
+    --dark-green: #0f380f;
+    --light-grey:#c3c2cc;
+}
+
+* {
+    font-family: "Plus Jakarta Sans",sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    color: var(--text)
+  }
+
+  button{
+    cursor: pointer;
+  }
+  
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .overflow{
+    height: 100vh;
+    /* overflow-y: auto; */
+    margin-bottom: 100px;
+    background: transparent;
+    padding-inline:24px;
+  }
+  
+  .ellipsis{
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    width: 200px; 
+    height: 1.6em; 
+    white-space: nowrap;
+  }
+  
+  .flex-space{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+.loader {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-block: 15px;
+}
+
+.loader > * {
+  border-radius: 6px;
+}
+.loader .header {
+  width:200px;
+  height:1.5rem;
+}
+
+.loader .content{
+  height: 150px;
+  width: 400px;
+}
+
+  .animate-shimmer {
+		background-color: #ddd;
+		background-image: linear-gradient(
+			90deg,
+			rgb(255 255 255 / 0),
+			rgb(255 255 255 / 0.7) 50%,
+			rgb(255 255 255 / 0) 100%
+		);
+		background-size: 200% 100%;
+		background-position: 100%;
+		background-repeat: no-repeat;
+		animation-name: shimmer;
+		animation-duration: 1.2s;
+		animation-delay: 0s;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+		animation-direction: normal;
+		animation-fill-mode: none;
+		animation-play-state: running;
+		animation-timeline: auto;
+		animation-range-start: normal;
+		animation-range-end: normal;
+	}
+
+	@keyframes shimmer {
+		0% {
+			background-position: 100%;
+		}
+		100% {
+			background-position: -100%;
+		}
+	}

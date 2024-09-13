@@ -27,7 +27,7 @@ export default {
     font-size: 0.78em;
     border-bottom: 1px solid #e0e0e0;
 }
-.flex{
+.flex-space{
     display: flex;
     justify-content: space-between;
     align-items: center;

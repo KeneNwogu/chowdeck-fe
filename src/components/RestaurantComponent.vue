@@ -1,11 +1,11 @@
 <template>
   <router-link class="restaurant-item" :to="{ name: 'restaurant', params: { id: restaurant.id } }">
     <img :src="restaurant.image" alt="restaurant" />
-    <div class="flex">
+    <div class="flex-space">
       <p class="restaurant-name">{{ restaurant.name }}</p>
       <p><i class="uil uil-heart" style="font-size: 1.2em;"></i></p>
     </div>
-    <div class="flex">
+    <div class="flex-space">
       <p>
         <span>
             <i class="uil uil-taxi" style="margin-right: 3px; font-size: 1.2em;"></i>
@@ -56,13 +56,7 @@ export default {
     object-fit: cover;
 }
 
-.flex{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.restaurant-item .flex:nth-last-child(1){
+.restaurant-item .flex-space:nth-last-child(1){
     margin-top: -12px;
 }
 

@@ -33,7 +33,7 @@
           </div>
 
           <div>
-            <img :src="item.image" alt="product" />
+            <img class="productImg" :src="item.image" alt="product" />
           </div>
         </div>
       </section>
@@ -180,6 +180,9 @@ export default {
   text-align: center;
 }
 
+.productImg{
+  border-radius: 4px;
+}
 .order-container {
   display: flex;
   justify-content: space-between;
@@ -236,29 +239,4 @@ export default {
   gap: 8px;
 }
 
-footer {
-  /* position: absolute;
-    bottom: 90px; */
-  text-align: center;
-  font-size: 0.85em;
-  width: 100%;
-  margin-top: 50vh;
-}
-
-footer p > span {
-  color: rgb(118, 209, 118);
-  text-decoration: underline;
-}
-
-footer .checkout-btn {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 1.05em;
-  border: none;
-  outline: none;
-  background: rgb(9, 70, 9);
-  color: white;
-  border-radius: 5px;
-}
 </style>

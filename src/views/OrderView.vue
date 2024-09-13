@@ -4,7 +4,7 @@
       <p>
         <span><i class="uil uil-arrow-left"></i></span> Orders
       </p>
-      <p><button class="clear-cart">Clear Cart</button></p>
+      <p><button @click="emptyCart" class="clear-cart" v-if="currentTab === 'cart'">Clear Cart</button></p>
     </div>
 
     <div class="nav" style="margin-top: -12px">
@@ -102,6 +102,10 @@ export default {
           });
       }
     },
+    emptyCart() {
+      // function to clear cart
+      return 
+    }
   },
   watch: {
     currentTab(value) {
@@ -131,7 +135,6 @@ export default {
 
 .clear-cart {
   background: rgb(219, 219, 219);
-  color: rgb(1, 41, 1);
   border-radius: 6px;
   border: none;
   outline: none;
