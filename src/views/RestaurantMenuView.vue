@@ -69,10 +69,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  font-size: 0.85em;
-  position: relative;
-}
 
 .icons div:not(:last-child) {
   margin-right: 10px;

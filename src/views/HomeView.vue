@@ -19,9 +19,10 @@
 .restaurants{
   display: flex;
   flex-direction: column;
+  padding-bottom: 50px;
 }
 .restaurants .restaurant-item{
-  margin-block: 10px 65px;
+  margin-top: 10px;
 }
 </style>
 
