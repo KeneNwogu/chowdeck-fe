@@ -34,12 +34,7 @@
 
     <div v-if="currentTab == 'completed'">
       <div class="completed-orders" v-if="user">
-        <CompletedOrderComponent />
-        <CompletedOrderComponent />
-        <CompletedOrderComponent />
-        <CompletedOrderComponent />
-        <CompletedOrderComponent />
-        <CompletedOrderComponent />
+        <CompletedOrderComponent v-for="order in completedOrders" :key="order.id" :order="order" />
       </div>
       <div v-else>
         <p>Sign in to view completed orders</p>
@@ -52,7 +47,7 @@
 import CartOrderComponent from "@/components/CartOrderComponent.vue";
 import CompletedOrderComponent from "@/components/CompletedOrderComponent.vue";
 import TabNavigation from "@/components/TabNavigation.vue";
-import { mapGetters } from "pinia";
+import { mapState } from "pinia";
 import { useCartStore, useUserStore } from "@/store";
 import axios from "axios";
 
@@ -77,8 +72,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(useCartStore, ["groupedCart"]),
-    ...mapGetters(useUserStore, ["user", "token"]),
+    ...mapState(useCartStore, ["groupedCart"]),
+    ...mapState(useUserStore, ["user", "token"]),
   },
   methods: {
     fetchOrders(filter) {
@@ -91,10 +86,10 @@ export default {
           })
           .then((res) => {
             if (filter == "completed") {
-              this.completedOrders = res.data;
+              this.completedOrders = res.data.orders;
               this.fetchedCompleted = true;
             } else {
-              this.ongoingOrders = res.data;
+              this.ongoingOrders = res.data.orders;
               this.fetchedOngoing = true;
             }
           })

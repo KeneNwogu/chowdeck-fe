@@ -4,7 +4,10 @@
       <p class="header-text">Checkout Summary</p>
     </div>
 
-    <section class="restaurant-info" style="margin-bottom: 40px; margin-top: 40px;">
+    <section
+      class="restaurant-info"
+      style="margin-bottom: 40px; margin-top: 40px"
+    >
       <div>
         <div>
           <p class="text">{{ restaurant.name }}</p>
@@ -24,7 +27,8 @@
             <p class="name">{{ item.name }}</p>
             <p class="quantity">Quantity: {{ item.quantity }}</p>
             <p class="quantity">
-              Price: {{formatPrice(item.price)}} each, Total: {{formatPrice(item.price * item.quantity)}}
+              Price: {{ formatPrice(item.price) }} each, Total:
+              {{ formatPrice(item.price * item.quantity) }}
             </p>
           </div>
 
@@ -41,8 +45,10 @@
       <p class="sub-text">Delivery Fee: {{ formatPrice(500) }}</p>
       <p class="sub-text">Tax: {{ formatPrice(0) }}</p>
       <p class="sub-text">Total: {{ formatPrice(price + 500) }}</p>
-      <button class="checkout-btn">
-        <span><i class="uil uil-check-circle" style="font-size: 1.2em;"></i></span>
+      <button class="checkout-btn" @click="makeOrder">
+        <span
+          ><i class="uil uil-check-circle" style="font-size: 1.2em"></i
+        ></span>
         <span>Complete Order</span>
       </button>
     </div>
@@ -51,8 +57,9 @@
 
 <script>
 import { mapState } from "pinia";
-import { useCartStore } from "@/store";
+import { useCartStore, useUserStore } from "@/store";
 // import { formatPrice as priceFormatter } from "lodash"
+import axios from "axios";
 
 import { usePriceFormatter } from "@/composables/usePriceFormatter";
 
@@ -74,11 +81,55 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ["cart"]),
+    ...mapState(useUserStore, ["token"]),
   },
   methods: {
     formatPrice(price) {
       let priceFormatter = usePriceFormatter();
       return priceFormatter(price);
+    },
+    makeOrder() {
+      // Make order
+      // get order items
+      let orderItems = this.items.map((i) => {
+        return {
+          menuId: i.id,
+          quantity: i.quantity,
+        };
+      });
+
+      axios
+        .post(
+          `${process.env.VUE_APP_API_URL}/orders`,
+          {
+            restaurantId: this.restaurant.id,
+            orderItems,
+          },
+          { headers: { Authorization: `Bearer ${this.token}` } }
+        )
+        .then((response) => {
+          let data = response.data
+          let cartStore = useCartStore();
+          cartStore.$state.cart = cartStore.$state.cart.filter(
+            (i) => i.restaurant.id != this.$route.params.id
+          );
+          cartStore.$state.restaurants = cartStore.$state.cart.filter(
+            (i) => i.restaurant.id != this.$route.params.id
+          );
+
+          // redirect to payment link
+          window.location.href = data.order.paymentLink;
+        })
+        .catch((error) => {
+          // if error is 401, redirect to login
+          if (error.response.status == 401) {
+            let userStore = useUserStore();
+            userStore.logout();
+            this.$router.push({ name: "profile" });
+          }
+        });
+
+      // remove restaurant items from cart
     },
   },
 };

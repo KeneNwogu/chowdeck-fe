@@ -2,7 +2,7 @@
   <div class="flex-space space">
     <div class="menu-details">
       <p>{{ item.name }}</p>
-      <p>₦{{ item.price }}</p>
+      <p>{{ formatPrice(item.price) }}</p>
     </div>
 
     <div class="menu-item">
@@ -18,12 +18,19 @@
 
 
 <script>
+import { usePriceFormatter } from "@/composables/usePriceFormatter";
 export default{
     props: {
         item: {
             type: Object,
             required: true
         }
+    },
+    methods: {
+      formatPrice(price) {
+        let priceFormatter = usePriceFormatter();
+        return priceFormatter(price);
+      }
     }
 }
 </script>
