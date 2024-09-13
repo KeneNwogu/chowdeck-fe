@@ -166,7 +166,7 @@ export default {
 }
 
 .checkout-details {
-  margin-top: 40px;
+  margin-block: 40px 65px;
 }
 
 .checkout-btn {
