@@ -46,10 +46,13 @@
       <p class="sub-text">Tax: {{ formatPrice(0) }}</p>
       <p class="sub-text">Total: {{ formatPrice(price + 500) }}</p>
       <button class="checkout-btn" @click="makeOrder">
-        <span
-          ><i class="uil uil-check-circle" style="font-size: 1.2em"></i
-        ></span>
-        <span>Complete Order</span>
+        <template v-if="!completingOrder">
+            <span
+            ><i class="uil uil-check-circle" style="font-size: 1.2em"></i
+          ></span>
+          <span>Complete Order</span>
+        </template>
+        <div v-else class="loading-spinner"></div>
       </button>
     </div>
   </div>
@@ -77,6 +80,7 @@ export default {
       restaurant: {},
       price: 0,
       unitPrice: 0,
+      completingOrder:false
     };
   },
   computed: {
@@ -91,6 +95,7 @@ export default {
     makeOrder() {
       // Make order
       // get order items
+      this.completingOrder = true
       let orderItems = this.items.map((i) => {
         return {
           menuId: i.id,
@@ -127,7 +132,7 @@ export default {
             userStore.logout();
             this.$router.push({ name: "profile" });
           }
-        });
+        }).finally(()=>this.completingOrder = false)
 
       // remove restaurant items from cart
     },
@@ -217,7 +222,7 @@ export default {
 }
 
 .checkout-details {
-  margin-top: 40px;
+  margin-block: 40px 65px;
 }
 
 .checkout-btn {
@@ -239,4 +244,30 @@ export default {
   gap: 8px;
 }
 
+
+/* HTML: <div class="loader"></div> */
+.loading-spinner {
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 4px solid white;
+  animation:
+    l20-1 0.8s infinite linear alternate,
+    l20-2 1.6s infinite linear;
+}
+@keyframes l20-1{
+   0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+   12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+   25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+   50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+   75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+   100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+}
+@keyframes l20-2{ 
+  0%    {transform:scaleY(1)  rotate(0deg)}
+  49.99%{transform:scaleY(1)  rotate(135deg)}
+  50%   {transform:scaleY(-1) rotate(0deg)}
+  100%  {transform:scaleY(-1) rotate(-135deg)}
+}
 </style>

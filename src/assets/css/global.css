@@ -27,8 +27,7 @@ body {
   }
   
   .overflow{
-    height: 100vh;
-    /* overflow-y: auto; */
+    min-height: 100vh;
     margin-bottom: 100px;
     background: transparent;
     padding-inline:24px;
@@ -72,7 +71,7 @@ body {
 
 .loader .content{
   height: 150px;
-  width: 400px;
+  min-width: 300px;
 }
 
   .animate-shimmer {
