@@ -10,7 +10,7 @@
 
             <div class="modal-details">
                 <p>{{ modalItem.name }}</p>
-                <p>₦{{ modalItem.price }}</p>
+                <p>{{ formatPrice(modalItem.price) }}</p>
             </div>
 
             <div class="cart-modal flex-space">
@@ -25,7 +25,7 @@
                         $emit('closeCartModal');
                     "
                 >
-                    Add ₦{{ modalItem.price * quantity }}
+                    Add {{ formatPrice(modalItem.price * quantity) }}
                 </button>
             </div>
         </div>
@@ -36,6 +36,7 @@
 import CartButton from "@/components/CartButton.vue";
 import { mapActions } from "pinia";
 import { useCartStore } from "@/store";
+import { usePriceFormatter } from "@/composables/usePriceFormatter";
 
 export default {
     beforeMount() {
@@ -61,6 +62,10 @@ export default {
     },
     methods: {
         ...mapActions(useCartStore, ["addToCart"]),
+        formatPrice(price){
+            let priceFormatter = usePriceFormatter();
+            return priceFormatter(price);
+        }
     },
 };
 </script>
