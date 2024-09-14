@@ -80,7 +80,9 @@ export default {
       restaurant: {},
       price: 0,
       unitPrice: 0,
-      completingOrder:false
+      completingOrder: false,
+      checkoutLink: "",
+      orderRef: ""
     };
   },
   computed: {
@@ -123,7 +125,9 @@ export default {
           );
 
           // redirect to payment link
-          window.location.href = data.order.paymentLink;
+          this.checkoutLink = data.order.paymentLink;
+          window.open(data.order.paymentLink, '_blank');
+          this.$router.push({ name: "profile" });
         })
         .catch((error) => {
           // if error is 401, redirect to login
@@ -137,6 +141,20 @@ export default {
       // remove restaurant items from cart
     },
   },
+  // watch: {
+  //   checkoutLink(value){
+  //     if(value){
+  //       let context = this;
+  //       setTimeout(() => {
+  //         context.$refs.checkout.addEventListener('onCloseWindow', function () { 
+  //           console.log('window closed')
+  //           context.$router.push({ name: "profile" });
+  //         }, false);
+  //       }, 1000);
+        
+  //     }
+  //   }
+  // }
 };
 </script>
 
@@ -269,5 +287,15 @@ export default {
   49.99%{transform:scaleY(1)  rotate(135deg)}
   50%   {transform:scaleY(-1) rotate(0deg)}
   100%  {transform:scaleY(-1) rotate(-135deg)}
+}
+
+.payment-checkout{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  margin-top: 20px;
 }
 </style>

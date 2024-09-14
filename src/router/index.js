@@ -4,8 +4,10 @@ import SearchView from '../views/SearchView.vue'
 import OrderView from '../views/OrderView.vue'
 import RestaurantMenuView from '../views/RestaurantMenuView.vue'
 import CartCheckoutView from '@/views/CartCheckoutView.vue'
+import OrderDetailsView from '@/views/OrderDetailsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import { useUserStore } from '@/store'
+
 
 const routes = [
   {
@@ -52,6 +54,19 @@ const routes = [
         return true
       }
       
+      return { name: 'profile' }
+    },
+  },
+  {
+    path: '/orders/:id',
+    name: 'order_details',
+    component: OrderDetailsView,
+    beforeEnter: () => {
+      // reject the navigation
+      let userStore = useUserStore()
+      if(userStore.token){
+        return true
+      }
       return { name: 'profile' }
     },
   }
