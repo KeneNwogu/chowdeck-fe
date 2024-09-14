@@ -106,8 +106,8 @@ export default {
 .close-btn {
     cursor: pointer;
     position: absolute;
-    right: 4px;
-    top: 4px;
+    right: 10px;
+    top: 10px;
     font-size: 1.6em;
     font-weight: 500;
     padding: 5px;

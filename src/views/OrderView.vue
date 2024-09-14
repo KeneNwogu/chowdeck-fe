@@ -135,5 +135,6 @@ export default {
   border: none;
   outline: none;
   padding: 5px 10px;
+  color: var(--text)
 }
 </style>
