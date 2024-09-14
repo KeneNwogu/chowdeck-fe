@@ -15,6 +15,10 @@ export const useCartStore = defineStore('cart', {
       }
 
       this.cart[existingCartItem] = cartItem;
+    },
+    clearCart(){
+      this.cart = [];
+      this.restaurants = [];
     }
   },
   getters: {

@@ -4,7 +4,7 @@
       <p>
         <span><i class="uil uil-arrow-left"></i></span> Orders
       </p>
-      <p><button @click="emptyCart" class="clear-cart" v-if="currentTab === 'cart'">Clear Cart</button></p>
+      <p><button @click="clearCart" class="clear-cart" v-if="currentTab === 'cart'">Clear Cart</button></p>
     </div>
 
     <div class="nav" style="margin-top: -12px">
@@ -47,7 +47,7 @@
 import CartOrderComponent from "@/components/CartOrderComponent.vue";
 import CompletedOrderComponent from "@/components/CompletedOrderComponent.vue";
 import TabNavigation from "@/components/TabNavigation.vue";
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useCartStore, useUserStore } from "@/store";
 import axios from "axios";
 
@@ -76,6 +76,7 @@ export default {
     ...mapState(useUserStore, ["user", "token"]),
   },
   methods: {
+    ...mapActions(useCartStore, ["clearCart"]),
     fetchOrders(filter) {
       if (this.user) {
         axios
@@ -101,15 +102,10 @@ export default {
             this.$router.push({ name: "profile" });
           });
       }
-    },
-    emptyCart() {
-      // function to clear cart
-      return 
     }
   },
   watch: {
     currentTab(value) {
-      console.log(value);
       if (value == "ongoing" && !this.fetchedOngoing) {
         this.fetchOrders("in_progress");
       } else if (value == "completed" && !this.fetchedCompleted) {
