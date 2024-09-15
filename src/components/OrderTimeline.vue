@@ -7,12 +7,16 @@
         <p class="sub-text">{{ description }}</p>
       </div>
     </div>
-    <p class="sub-text">{{ timeline.createdAt ? formatTimeFromISO(timeline.createdAt) : "-" }}</p>
+    <p class="sub-text" v-if="timeline.completed">
+        {{ timeline.createdAt ? formatTimeFromISO(timeline.createdAt) : "-" }}
+    </p>
+    <LoadingSpinner v-else :color="'rgb(128, 138, 134)'"/>
   </div>
 </template>
 
 <script setup>
 import { defineProps } from "vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const props = defineProps({
   timeline: Object,
