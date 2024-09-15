@@ -30,12 +30,13 @@ const logout = () => {
 <style scoped>
 .container {
     position: fixed;
-    top: 100px;
+    top: 200px;
     background-color: #fff;
     border-radius: 5px;
     /* padding: 20px; */
-    width: 100%;
-    max-width: 400px; /* Adjust for larger screens */
+    width: 90%;
+    /* max-width: 90%;
+    min-width: 90%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,5 +92,6 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    width: 90%;
 }
 </style>
