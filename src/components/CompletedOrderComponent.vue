@@ -1,7 +1,7 @@
 <template>
   <div class="container flex">
     <div>
-      <p>{{ order.restaurant.name }}</p>
+      <p class="ellipsis" style="max-width: 150px;">{{ order.restaurant.name }}</p>
       <p>{{ formatDate(order.createdAt) }}</p>
     </div>
     <div>
