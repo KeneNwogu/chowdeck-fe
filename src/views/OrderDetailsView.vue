@@ -31,7 +31,7 @@
 
   <section class="order-summary">
     <p class="text">Order Summary</p>
-    <OrderItem v-for="item in items" :key="item.id" :item="item" />
+    <OrderItem v-for="item in items" :key="item.stage" :item="item" />
   </section>
 
   <div class="checkout-details" style="margin-top: 40px">
@@ -60,7 +60,11 @@ import { usePriceFormatter } from "@/composables/usePriceFormatter";
 import { onBeforeMount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/store";
+import { useOrderTimelineStream } from "@/composables/useOrderTimelineStream";
 import axios from "axios";
+
+
+let orderTimelineStream = null;
 
 const price = 9560;
 const formatPrice = usePriceFormatter();
@@ -71,7 +75,38 @@ const route = useRoute();
 const router = useRouter();
 
 const items = ref([]);
-const timelines = ref([]);
+const timelines = ref([
+    {
+        "stage": 1,
+        "name": "Order received by vendor",
+        "completed": false,
+    },
+    {
+        "stage": 2,
+        "name": "Vendor is preparing your order.",
+        "completed": false,
+    },
+    {
+        "stage": 3,
+        "name": "Rider has accepted your order.",
+        "completed": false,
+    },
+    {
+        "stage": 4,
+        "name": "Rider at vendor.",
+        "completed": false,
+    },
+    {
+        "stage": 5,
+        "name": "Rider has picked up your order.",
+        "completed": false,
+    },
+    {
+        "stage": 6,
+        "name": "Your order has arrived.",
+        "completed": false,
+    }
+]);
 const restaurant = ref(null);
 
 // get data from api
@@ -84,55 +119,48 @@ onBeforeMount(() => {
       },
     })
     .then((response) => {
-      console.log(response.data);
       loading.value = false;
       items.value = response.data.orderItems.map((item) => ({
         ...item.menu,
         quantity: item.quantity,
       }));
-      timelines.value = response.data.timeline.sort((a, b) => a.stage - b.stage);
+      let timelineData = response.data.timeline.sort((a, b) => a.stage - b.stage);
+        timelines.value.forEach((timeline) => {
+            if(timelineData[timeline.stage - 1]){
+                timelines.value[timeline.stage - 1] = timelineData[timeline.stage - 1];
+            }
+        });
+
       restaurant.value = response.data.restaurant;
+      if(response.data.status === "in_progress"){
+        orderTimelineStream = useOrderTimelineStream();
+        orderTimelineStream.initialize();
+        orderTimelineStream.setEventListener((event) => {
+            let data = event.data;
+            data = JSON.parse(data);
+            let timeline = {
+                id: data.Id,
+                stage: data.Stage,
+                name: data.Name,
+                completed: data.Completed,
+                createdAt: data.CreatedAt,
+            };
+
+            if(data.OrderId === route.params.id){
+                timelines.value[timeline.stage - 1] = timeline;
+            }
+        });
+      }
     })
     .catch((error) => {
-      console.error(error);
-      loading.value = false;
       if (error.response.status === 401) {
         userStore.logout();
         router.push({ name: "profile" });
       }
+
+      router.push({ name: "orders" });
     });
 });
-
-// const timelines = [
-//   {
-//     stage: 1,
-//     title: "Order Placed",
-//     name: "Your order has been received",
-//     time: "1:40pm",
-//     completed: true,
-//   },
-//   {
-//     stage: 2,
-//     title: "Order Confirmed",
-//     name: "Your order has been confirmed",
-//     time: "1:45pm",
-//     completed: true,
-//   },
-//   {
-//     stage: 3,
-//     title: "Order Prepared",
-//     name: "Your order is being prepared",
-//     time: "1:50pm",
-//     completed: true
-//   },
-//   {
-//     stage: 4,
-//     title: "Order Delivered",
-//     name: "Your order has been delivered",
-//     time: "2:00pm",
-//     completed: false
-//   },
-// ];
 </script>
 
 <style scoped>

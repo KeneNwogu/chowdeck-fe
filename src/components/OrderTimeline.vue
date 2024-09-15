@@ -7,7 +7,7 @@
         <p class="sub-text">{{ description }}</p>
       </div>
     </div>
-    <p class="sub-text">{{ formatTimeFromISO(timeline.createdAt) }}</p>
+    <p class="sub-text">{{ timeline.createdAt ? formatTimeFromISO(timeline.createdAt) : "-" }}</p>
   </div>
 </template>
 
@@ -56,7 +56,7 @@ function formatTimeFromISO(isoString) {
 .text {
   /* font-family: Lexend;  */
   /* Heading */
-  font-size: 17px;
+  font-size: 15px;
   line-height: 30px;
   font-weight: 400;
   color: #000000ff; /* black */

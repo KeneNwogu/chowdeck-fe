@@ -26,7 +26,9 @@
     </div>
 
     <div v-if="currentTab == 'ongoing'">
-      <div class="ongoing-orders" v-if="user"></div>
+      <div class="ongoing-orders" v-if="user">
+        <OngoingOrder v-for="order in ongoingOrders" :key="order.id" :order="order" />
+      </div>
       <div v-else>
         <p>Sign in to view ongoing orders</p>
       </div>
@@ -46,6 +48,7 @@
 <script>
 import CartOrderComponent from "@/components/CartOrderComponent.vue";
 import CompletedOrderComponent from "@/components/CompletedOrderComponent.vue";
+import OngoingOrder from "@/components/OngoingOrder.vue";
 import TabNavigation from "@/components/TabNavigation.vue";
 import { mapState, mapActions } from "pinia";
 import { useCartStore, useUserStore } from "@/store";
@@ -56,6 +59,7 @@ export default {
     CartOrderComponent,
     CompletedOrderComponent,
     TabNavigation,
+    OngoingOrder,
   },
   data() {
     return {
@@ -90,7 +94,13 @@ export default {
               this.completedOrders = res.data.orders;
               this.fetchedCompleted = true;
             } else {
-              this.ongoingOrders = res.data.orders;
+              this.ongoingOrders = res.data.orders.map((order) => ({
+                id: order.id,
+                name: order.restaurant.name,
+                totalAmount: order.totalAmount,
+                quantity: order.orderItems.length,
+                image: order.restaurant.image,
+              }));
               this.fetchedOngoing = true;
             }
           })

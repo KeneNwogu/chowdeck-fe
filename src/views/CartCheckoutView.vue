@@ -127,7 +127,7 @@ export default {
           // redirect to payment link
           this.checkoutLink = data.order.paymentLink;
           window.open(data.order.paymentLink, '_blank');
-          this.$router.push({ name: "profile" });
+          this.$router.push({ name: "order_details", params: { id: data.order.id } });
         })
         .catch((error) => {
           // if error is 401, redirect to login
