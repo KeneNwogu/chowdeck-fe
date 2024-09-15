@@ -61,16 +61,14 @@ export default {
 <style scoped>
 .profile {
   /* font-family: Arial, sans-serif; */
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 100px;
   left: 0;
   width: 100%;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
 }
 
 .container {

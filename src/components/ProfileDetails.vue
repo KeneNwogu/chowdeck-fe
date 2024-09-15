@@ -29,6 +29,8 @@ const logout = () => {
 
 <style scoped>
 .container {
+    position: fixed;
+    top: 100px;
     background-color: #fff;
     border-radius: 5px;
     /* padding: 20px; */
@@ -38,8 +40,6 @@ const logout = () => {
     flex-direction: column;
     justify-content: center;
     /* vertical center */
-    height: calc(100vh - 68px);
-    overflow-y: hidden;
 }
 
 header {
