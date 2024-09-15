@@ -58,6 +58,7 @@ export default {
 .container {
   font-size: 0.78em;
   border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
 }
 .flex {
   display: flex;
@@ -71,6 +72,6 @@ a {
 }
 
 p {
-  margin: 3px;
+  margin: 6px;
 }
 </style>

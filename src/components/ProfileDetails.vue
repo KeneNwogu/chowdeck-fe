@@ -1,38 +1,50 @@
 <template>
     <div class="container">
         <header>
-            <img src="images/logo.png" alt="App Logo">
             <h1>Your Profile</h1>
         </header>
-        <div class="profile-pic">
-            <img src="images/profile.jpg" alt="Profile Picture">
-        </div>
+        <!-- <div class="profile-pic">
+            <img :src="user.profileImage" alt="Profile Picture">
+        </div> -->
         <section class="details">
             <h2>Name</h2>
-            <p>John Doe</p>
+            <p>{{ user.username }}</p>
             <h2>Email</h2>
-            <p>johndoe@example.com</p>
-            <h2>Phone Number</h2>
-            <p>+1234567890</p>
-            <h2>Location</h2>
-            <p>Lagos, Nigeria</p>
+            <p>{{ user.email }}</p>
         </section>
-        <button class="edit-btn">Edit Profile</button>
+        <button class="edit-btn" @click="logout">Log Out</button>
     </div>
 </template>
+
+<script setup>
+import { useUserStore } from '@/store';
+
+const userStore = useUserStore();
+const user = userStore.user;
+
+const logout = () => {
+    userStore.logout();
+}
+</script>
 
 <style scoped>
 .container {
     background-color: #fff;
     border-radius: 5px;
-    padding: 20px;
+    /* padding: 20px; */
     width: 100%;
     max-width: 400px; /* Adjust for larger screens */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* vertical center */
+    height: calc(100vh - 68px);
+    overflow-y: hidden;
 }
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -72,7 +84,7 @@ h1 {
 }
 
 .edit-btn {
-    background-color: #4CAF50; /* Green color */
+    background-color: #e61a1a; /* Green color */
     color: #fff;
     padding: 10px 20px;
     border: none;
