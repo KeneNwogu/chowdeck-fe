@@ -135,7 +135,7 @@ onBeforeMount(() => {
 
       restaurant.value = response.data.restaurant;
       // if order is in progress and user has completed payment
-      if(response.data.status === "in_progress" && request.data.paymentStatus !== "pending"){
+      if(response.data.status === "in_progress" && response.data.paymentStatus !== "pending"){
         orderTimelineStream = useOrderTimelineStream();
         orderTimelineStream.initialize();
         orderTimelineStream.setEventListener((event) => {
