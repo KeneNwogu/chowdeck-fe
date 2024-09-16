@@ -66,7 +66,7 @@ import axios from "axios";
 
 let orderTimelineStream = null;
 
-const price = 9560;
+const price = ref(null);
 const formatPrice = usePriceFormatter();
 const loading = ref(true);
 
@@ -124,6 +124,8 @@ onBeforeMount(() => {
         ...item.menu,
         quantity: item.quantity,
       }));
+
+      price.value = response.data.totalAmount;
       let timelineData = response.data.timeline.sort((a, b) => a.stage - b.stage);
         timelines.value.forEach((timeline) => {
             if(timelineData[timeline.stage - 1]){
